@@ -23,6 +23,7 @@ El proyecto se desarrolla como una aplicación web utilizando las siguientes tec
 ### NOMBRE DE LA TAREA
 
 El objetivo de esta tarea es seleccionar las palabras clave más relevantes del texto extraído para mejorar el posicionamiento SEO. Se utilizará la librería SpaCy para identificar entidades nombradas y palabras significativas, empleando el modelo preentrenado "es_core_news_sm" para el reconocimiento de entidades nombradas en español.
+"""
 import spacy
 from collections import Counter
 
@@ -58,6 +59,8 @@ def recognize_keywords(text, num_keywords=10):
     # Obtener las palabras clave más frecuentes
     keywords = [keyword for keyword, count in keyword_counter.most_common(num_keywords)]
     return keywords
+
+    """
 
 
 La función utilizará etiquetas como `PER` (Personas), `ORG` (Organizaciones), `LOC` (Lugares), así como categorías gramaticales como `NOUN`, `PROPN` y `ADJ`. Se gestionarán las Stop Words y se normalizará el texto para trabajar con los lemas.
