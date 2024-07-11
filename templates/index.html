@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>VerifiKit</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js\index.js' %}"></script>
+</head>
+<body>
+    <div class="container container-extractor">
+        <h1>Las palabras que son visibles en tu web para el SEO son:</h1>
+        <form method="post" action="{% url 'process_url' %}">
+            {% csrf_token %}
+            <label for="url">Ingrese la URL:</label>
+            <input type="text" name="url" id="url" required>
+            <input type="submit" value="Process">
+            <input type="button" value="Clean" onclick="cleanForm()">
+        </form>        
+        {% if bold_words %}
+        <div class="keywords-container-horizontal">
+            <h2>Las palabras en negrita de tu web son:</h2>
+            {% for word in bold_words %}
+                <span class="keyword">{{ word }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="container container-extractor">
+        <h1>Para Verifikit estas son las más relevantes:</h1>
+        {% if keywords %}
+        <p>Las palabras más importantes de tu web son: </p>
+        <div class="keywords-container">
+            {% for keyword in keywords %}
+            <span class="keyword">{{ keyword }}</span><br>
+            {% endfor %}
+        </div>  
+        {% endif %}
+    </div>
+
+    <div class="container container-recommender">
+        <h1>Palabras Clave que recomendamos para tu SEO</h1>
+        <p>Primero escribe, en una palabra, la actividad de tu empresa:</p>
+        <form method="post" action="{% url 'process_api' %}">
+            {% csrf_token %}
+            <label for="area_actividad">Área de Actividad:</label>
+            <input type="text" name="area_actividad" id="area_actividad" required>
+            <input type="submit" value="Obtener Palabras Clave">
+        </form>
+        {% if recomendaciones %}
+        <div class="keywords-container">
+            <div class="row">
+                {% for keyword in recomendaciones %}
+                <span class="keyword">{{ keyword }}</span>
+                {% if forloop.counter|divisibleby:5 and not forloop.last %}
+            </div>
+            <div class="row">
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
