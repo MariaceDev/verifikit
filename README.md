@@ -63,7 +63,7 @@ Para llevar a cabo este proyecto, es crucial contar con tres perfiles profesiona
 ### CORPUS DE EVALUACIÓN
 
 El corpus de evaluación consiste en los textos extraídos de la URL proporcionada por el usuario. Se compararán las palabras destacadas en la web con las identificadas como significativas por nuestro modelo y filtros, requiriendo colaboración entre lingüistas y expertos en SEO para garantizar la funcionalidad del proyecto.
-![Prueba prototipo](captura resultado kit.png)
+![Prueba prototipo](capturakit.png)
 
 Se muestra a continuación un ejemplo del prototipo utilizando la dirección de Cálamo&Cran (https://www.calamoycran.com/):
 
