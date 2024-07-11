@@ -23,8 +23,42 @@ El proyecto se desarrolla como una aplicación web utilizando las siguientes tec
 ### NOMBRE DE LA TAREA
 
 El objetivo de esta tarea es seleccionar las palabras clave más relevantes del texto extraído para mejorar el posicionamiento SEO. Se utilizará la librería SpaCy para identificar entidades nombradas y palabras significativas, empleando el modelo preentrenado "es_core_news_sm" para el reconocimiento de entidades nombradas en español.
+import spacy
+from collections import Counter
 
-### Captura de pantalla del código desarrollado en Visual Studio
+# Cargar el modelo de lenguaje preentrenado en español
+nlp = spacy.load('es_core_news_sm')
+
+def recognize_keywords(text, num_keywords=10):
+    """
+    Reconoce palabras clave en un texto dado utilizando SpaCy.
+    
+    Args:
+    - text (str): Texto a analizar.
+    - num_keywords (int): Número máximo de palabras clave a devolver (por defecto, 10).
+    
+    Returns:
+    - keywords (list): Lista de palabras clave más relevantes según el análisis.
+    """
+    doc = nlp(text)
+
+    # Contador de palabras clave
+    keyword_counter = Counter()
+
+    # Identificar y agregar entidades nombradas relevantes para SEO
+    for ent in doc.ents:
+        if ent.label_ in ['PER', 'ORG', 'LOC']:  # Filtrar entidades relevantes para SEO
+            keyword_counter[ent.text.lower()] += 1
+
+    # Contar sustantivos y adjetivos relevantes
+    for token in doc:
+        if token.pos_ in ['NOUN', 'PROPN', 'ADJ'] and not token.is_stop:
+            keyword_counter[token.lemma_.lower()] += 1
+
+    # Obtener las palabras clave más frecuentes
+    keywords = [keyword for keyword, count in keyword_counter.most_common(num_keywords)]
+    return keywords
+
 
 La función utilizará etiquetas como `PER` (Personas), `ORG` (Organizaciones), `LOC` (Lugares), así como categorías gramaticales como `NOUN`, `PROPN` y `ADJ`. Se gestionarán las Stop Words y se normalizará el texto para trabajar con los lemas.
 
